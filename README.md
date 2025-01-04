@@ -1,5 +1,5 @@
-# SoundMuffler
+# Chikkenmuffler
 
-This is a port of Extra Utilities 2's Sound Muffler to Fabric.
+Soundmuffler fork for Chikken
 
 Requires Fabric API.
