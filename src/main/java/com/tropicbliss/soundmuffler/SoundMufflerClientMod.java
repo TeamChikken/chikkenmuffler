@@ -16,7 +16,7 @@ import java.util.List;
 @Environment(EnvType.CLIENT)
 public class SoundMufflerClientMod implements ClientModInitializer {
   // The range at which the minimum volume should always be played
-  public static final double MUFFLER_RANGE = 10;
+  public static final double MUFFLER_RANGE = 7;
 
   // The range from the muffler range at which the volume starts falling off
   public static final double FALLOFF_RANGE = 10;
