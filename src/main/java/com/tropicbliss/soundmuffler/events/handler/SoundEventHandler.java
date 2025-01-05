@@ -41,23 +41,25 @@ public class SoundEventHandler {
       }
     }
 
+    // If no muffler was found, skip applying any modifications
     if (closestMuffler == null) {
       return;
     }
 
     float scale = (float)((Math.sqrt(closestDistance) - SoundMufflerClientMod.MUFFLER_RANGE) / SoundMufflerClientMod.FALLOFF_RANGE);
 
-    // Player within base range? Then set volume to min
+    // Audio source too far, no muffling applicable
+    if (scale > 1) {
+      return;
+    }
+
+    // Audio source within base range? Then set volume to min
     if (scale < 0) {
       soundInfo.setVolume(SoundMufflerClientMod.MIN_VOLUME);
       return;
     }
 
-    // Player too far, no muffling applicable
-    if (scale > 1) {
-      return;
-    }
-
+    // Set volume to result of falloff method
     soundInfo.setVolume(SoundMufflerClientMod.FALLOFF_METHOD.calculate(scale, SoundMufflerClientMod.MIN_VOLUME, soundInfo.getVolume()));
   }
 }
