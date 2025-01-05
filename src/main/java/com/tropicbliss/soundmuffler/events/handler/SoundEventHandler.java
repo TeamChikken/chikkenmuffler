@@ -28,7 +28,7 @@ public class SoundEventHandler {
       SoundMufflerBlockEntity muffler = SoundMufflerClientMod.mufflers.get(i);
 
       // Check if the muffler is valid
-      if (muffler == null || muffler.isRemoved()) {
+      if (muffler == null || muffler.isRemoved() || !muffler.hasWorld()) {
         SoundMufflerClientMod.mufflers.remove(muffler);
         continue;
       }
