@@ -1,5 +1,6 @@
 package com.tropicbliss.soundmuffler;
 
+import com.tropicbliss.soundmuffler.block.ModBlockEntities;
 import com.tropicbliss.soundmuffler.block.ModBlocks;
 import net.fabricmc.api.ModInitializer;
 
@@ -9,6 +10,7 @@ public class SoundMufflerMod implements ModInitializer {
 
   @Override
   public void onInitialize() {
-    ModBlocks.registerBlocks();
+    ModBlocks.register();
+    ModBlockEntities.register();
   }
 }
