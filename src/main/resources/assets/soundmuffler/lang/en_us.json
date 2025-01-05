@@ -1,3 +1,13 @@
 {
-  "block.soundmuffler.sound_muffler": "Sound Muffler"
+  "block.soundmuffler.sound_muffler": "Sound Muffler",
+  "soundmuffler.title": "Sound Muffler",
+  "soundmuffler.config.category.main": "Sound Muffler config",
+  "soundmuffler.config.min_volume": "Minimum Volume",
+  "soundmuffler.config.min_volume.tooltip": "The lowest volume a sound can get muffled to",
+  "soundmuffler.config.muffler_range": "Muffler Range",
+  "soundmuffler.config.muffler_range.tooltip": "The range of the muffler where the minimum volume applies",
+  "soundmuffler.config.falloff_range": "Falloff Range",
+  "soundmuffler.config.falloff_range.tooltip": "The range starting from the muffler range where sound starts falling off",
+  "soundmuffler.config.falloff_method": "Falloff Method",
+  "soundmuffler.config.falloff_method.tooltip": "The method used to modify volume over distance"
 }
