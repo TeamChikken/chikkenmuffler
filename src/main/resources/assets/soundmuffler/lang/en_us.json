@@ -1,13 +1,17 @@
 {
   "block.soundmuffler.sound_muffler": "Sound Muffler",
   "soundmuffler.title": "Sound Muffler",
-  "soundmuffler.config.category.main": "Sound Muffler config",
-  "soundmuffler.config.min_volume": "Minimum Volume",
-  "soundmuffler.config.min_volume.tooltip": "The lowest volume a sound can get muffled to",
-  "soundmuffler.config.muffler_range": "Muffler Range",
-  "soundmuffler.config.muffler_range.tooltip": "The range of the muffler where the minimum volume applies",
-  "soundmuffler.config.falloff_range": "Falloff Range",
-  "soundmuffler.config.falloff_range.tooltip": "The range starting from the muffler range where sound starts falling off",
-  "soundmuffler.config.falloff_method": "Falloff Method",
-  "soundmuffler.config.falloff_method.tooltip": "The method used to modify volume over distance"
+  "text.config.soundmuffler_config.title": "Sound Muffler config",
+  "text.config.soundmuffler_config.option.minVolume": "Minimum Volume",
+  "text.config.soundmuffler_config.option.minVolume.tooltip": "The lowest volume a sound can get muffled to",
+  "text.config.soundmuffler_config.option.mufflerRange": "Muffler Range",
+  "text.config.soundmuffler_config.option.mufflerRange.tooltip": "The range of the muffler where the minimum volume applies",
+  "text.config.soundmuffler_config.option.falloffRange": "Falloff Range",
+  "text.config.soundmuffler_config.option.falloffRange.tooltip": "The range starting from the muffler range where sound starts falling off",
+  "text.config.soundmuffler_config.option.falloffMethod": "Falloff Method",
+  "text.config.soundmuffler_config.option.falloffMethod.tooltip": "The method used to modify volume over distance",
+  "text.config.soundmuffler_config.option.falloffMethod.value.linear": "Linear",
+  "text.config.soundmuffler_config.option.falloffMethod.value.exponential": "Exponential",
+  "text.config.soundmuffler_config.option.falloffMethod.value.logarithmic": "Logarithmic",
+  "text.config.soundmuffler_config.option.falloffMethod.value.inverse_squared": "Inverse Squared"
 }

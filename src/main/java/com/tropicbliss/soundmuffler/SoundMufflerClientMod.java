@@ -1,7 +1,6 @@
 package com.tropicbliss.soundmuffler;
 
 import com.tropicbliss.soundmuffler.block.SoundMufflerBlockEntity;
-import com.tropicbliss.soundmuffler.config.SoundMufflerConfig;
 import com.tropicbliss.soundmuffler.events.handler.SoundEventHandler;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -16,7 +15,6 @@ public class SoundMufflerClientMod implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {
-    SoundMufflerConfig.load();
     SoundEventHandler.init();
   }
 }

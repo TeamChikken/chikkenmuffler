@@ -1,6 +1,7 @@
 package com.tropicbliss.soundmuffler.events.handler;
 
 import com.tropicbliss.soundmuffler.SoundMufflerClientMod;
+import com.tropicbliss.soundmuffler.SoundMufflerMod;
 import com.tropicbliss.soundmuffler.block.SoundMufflerBlockEntity;
 import com.tropicbliss.soundmuffler.config.SoundMufflerConfig;
 import com.tropicbliss.soundmuffler.events.SoundPlayingEvents;
@@ -45,8 +46,8 @@ public class SoundEventHandler {
       return;
     }
 
-    SoundMufflerConfig config = SoundMufflerConfig.getInstance();
-    float scale = (float)((Math.sqrt(closestDistance) - config.mufflerRange) / config.falloffRange);
+    SoundMufflerConfig config = SoundMufflerMod.CONFIG;
+    float scale = (float)((Math.sqrt(closestDistance) - config.mufflerRange()) / config.falloffRange());
 
     // Audio source too far, no muffling applicable
     if (scale > 1) {
@@ -55,11 +56,11 @@ public class SoundEventHandler {
 
     // Audio source within base range? Then set volume to min
     if (scale < 0) {
-      soundInfo.setVolume(config.minVolume);
+      soundInfo.setVolume(config.minVolume());
       return;
     }
 
     // Set volume to result of falloff method
-    soundInfo.setVolume(config.falloffMethod.getFalloffMethod().calculate(scale, config.minVolume, soundInfo.getVolume()));
+    soundInfo.setVolume(config.falloffMethod().getFalloffMethod().calculate(scale, config.minVolume(), soundInfo.getVolume()));
   }
 }
