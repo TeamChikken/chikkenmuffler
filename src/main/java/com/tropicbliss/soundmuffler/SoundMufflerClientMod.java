@@ -11,8 +11,14 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class SoundMufflerClientMod implements ClientModInitializer {
-  public static final double MUFFLER_RANGE = 20;
-  public static final double MIN_VOLUME = .0F;
+  // The range at which the minimum volume should always be played
+  public static final double MUFFLER_RANGE = 7;
+
+  // The range from the muffler range at which the volume starts falling off
+  public static final double FALLOFF_RANGE = 10;
+
+  // The minimum volume the muffler should allow
+  public static final float MIN_VOLUME = .0F;
 
   // Lazy global for the closest muffler...
   public static List<SoundMufflerBlockEntity> mufflers = new ArrayList<>();

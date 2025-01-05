@@ -45,18 +45,22 @@ public class SoundEventHandler {
       return;
     }
 
-    float linearPercentage = (float)(Math.sqrt(closestDistance) / SoundMufflerClientMod.MUFFLER_RANGE);
+    float linearPercentage = (float)((Math.sqrt(closestDistance) - SoundMufflerClientMod.MUFFLER_RANGE) / SoundMufflerClientMod.FALLOFF_RANGE);
+
+    // Player within base range? Then set volume to min
+    if (linearPercentage < 0) {
+      soundInfo.setVolume(SoundMufflerClientMod.MIN_VOLUME);
+      return;
+    }
 
     // Player too far, no muffling applicable
     if (linearPercentage > 1) {
       return;
     }
 
-    float volume = soundInfo.getVolume();
+    // Calculate volume with linear interpolation (linear falloff)
+    float volume = SoundMufflerClientMod.MIN_VOLUME + linearPercentage *  (soundInfo.getVolume() - SoundMufflerClientMod.MIN_VOLUME);
 
-    // Clamp to valid range [MIN_VOLUME, 1]
-    linearPercentage = (float)Math.max(SoundMufflerClientMod.MIN_VOLUME, Math.min(volume * linearPercentage, 1.0F));
-
-    soundInfo.setVolume(linearPercentage);
+    soundInfo.setVolume(volume);
   }
 }
