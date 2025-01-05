@@ -3,6 +3,7 @@
 package com.tropicbliss.soundmuffler.events.handler;
 
 import com.tropicbliss.soundmuffler.SoundMufflerClientMod;
+import com.tropicbliss.soundmuffler.block.SoundMufflerBlockEntity;
 import com.tropicbliss.soundmuffler.events.SoundPlayingEvents;
 import net.minecraft.client.MinecraftClient;
 
@@ -19,18 +20,32 @@ public class SoundEventHandler {
       return;
     }
 
-    // No blocks set
-    if (SoundMufflerClientMod.ClosestMuffler == null) {
+    SoundMufflerBlockEntity closestMuffler = null;
+    double closestDistance = Double.MAX_VALUE;
+
+    // Find the closest muffler to the audio source
+    for (int i = SoundMufflerClientMod.mufflers.size() -1; i >= 0; i--) {
+      SoundMufflerBlockEntity muffler = SoundMufflerClientMod.mufflers.get(i);
+
+      // Check if the muffler is valid
+      if (muffler == null || muffler.isRemoved()) {
+        SoundMufflerClientMod.mufflers.remove(muffler);
+        continue;
+      }
+
+      // Check if the muffler is closer
+      double distance = muffler.getPos().getSquaredDistance(soundInfo.getX(), soundInfo.getY(), soundInfo.getZ());
+      if (distance < closestDistance) {
+        closestMuffler = muffler;
+        closestDistance = distance;
+      }
+    }
+
+    if (closestMuffler == null) {
       return;
     }
 
-    // Muffler was removed
-    if (SoundMufflerClientMod.ClosestMuffler.isRemoved()) {
-      SoundMufflerClientMod.ClosestMuffler = null;
-      return;
-    }
-
-    float linearPercentage = (float)(SoundMufflerClientMod.ClosestRange / SoundMufflerClientMod.MUFFLER_RANGE);
+    float linearPercentage = (float)(Math.sqrt(closestDistance) / SoundMufflerClientMod.MUFFLER_RANGE);
 
     // Player too far, no muffling applicable
     if (linearPercentage > 1) {
@@ -42,7 +57,6 @@ public class SoundEventHandler {
     // Clamp to valid range [MIN_VOLUME, 1]
     linearPercentage = (float)Math.max(SoundMufflerClientMod.MIN_VOLUME, Math.min(volume * linearPercentage, 1.0F));
 
-    // TODO: Muffle any sounds PLAYED near the block too, such that players can be far away from the block, but nearby sounds still get muffled
     soundInfo.setVolume(linearPercentage);
   }
 }
