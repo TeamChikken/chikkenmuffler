@@ -1,9 +1,8 @@
-// Adapted from https://github.com/MorningSage/ExtremeSoundMuffler-Fabric/blob/master/src/main/java/morningsage/extremesoundmuffler/events/handlers/SoundEventHandler.java by tropicbliss on 22/12/2021
-
 package com.tropicbliss.soundmuffler.events.handler;
 
 import com.tropicbliss.soundmuffler.SoundMufflerClientMod;
 import com.tropicbliss.soundmuffler.block.SoundMufflerBlockEntity;
+import com.tropicbliss.soundmuffler.config.SoundMufflerConfig;
 import com.tropicbliss.soundmuffler.events.SoundPlayingEvents;
 import net.minecraft.client.MinecraftClient;
 
@@ -46,7 +45,8 @@ public class SoundEventHandler {
       return;
     }
 
-    float scale = (float)((Math.sqrt(closestDistance) - SoundMufflerClientMod.MUFFLER_RANGE) / SoundMufflerClientMod.FALLOFF_RANGE);
+    SoundMufflerConfig config = SoundMufflerConfig.getInstance();
+    float scale = (float)((Math.sqrt(closestDistance) - config.mufflerRange) / config.falloffRange);
 
     // Audio source too far, no muffling applicable
     if (scale > 1) {
@@ -55,11 +55,11 @@ public class SoundEventHandler {
 
     // Audio source within base range? Then set volume to min
     if (scale < 0) {
-      soundInfo.setVolume(SoundMufflerClientMod.MIN_VOLUME);
+      soundInfo.setVolume(config.minVolume);
       return;
     }
 
     // Set volume to result of falloff method
-    soundInfo.setVolume(SoundMufflerClientMod.FALLOFF_METHOD.calculate(scale, SoundMufflerClientMod.MIN_VOLUME, soundInfo.getVolume()));
+    soundInfo.setVolume(config.falloffMethod.getFalloffMethod().calculate(scale, config.minVolume, soundInfo.getVolume()));
   }
 }

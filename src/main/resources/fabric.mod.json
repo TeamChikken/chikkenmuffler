@@ -21,6 +21,9 @@
     ],
     "client": [
       "com.tropicbliss.soundmuffler.SoundMufflerClientMod"
+    ],
+    "modmenu": [
+      "com.tropicbliss.soundmuffler.config.ModMenuIntegration"
     ]
   },
   "mixins": [
