@@ -1,0 +1,123 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/refs/heads/1.19/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical">
+            <children>
+                <flow-layout direction="vertical">
+                    <children>
+                        <template name="property-text-box">
+                            <property>min-volume</property>
+                            <property-name>Min Volume</property-name>
+                        </template>
+
+                        <template name="property-text-box" >
+                            <property>range</property>
+                            <property-name>Range</property-name>
+                        </template>
+
+                        <template name="property-text-box">
+                            <property>falloff-range</property>
+                            <property-name>Falloff Range</property-name>
+                        </template>
+
+                        <flow-layout direction="horizontal">
+                            <children>
+                                <button id="button-cancel">
+                                    <text>Cancel</text>
+                                    <sizing>
+                                        <horizontal method="fill">45</horizontal>
+                                    </sizing>
+
+                                    <margins>
+                                        <right>2</right>
+                                    </margins>
+                                </button>
+
+                                <button id="button-done">
+                                    <text>Done</text>
+                                    <sizing>
+                                        <horizontal method="fill">45</horizontal>
+                                    </sizing>
+
+                                    <margins>
+                                        <left>2</left>
+                                    </margins>
+                                </button>
+                            </children>
+
+                            <margins>
+                                <top>4</top>
+                            </margins>
+
+                            <sizing>
+                                <horizontal method="fill">100</horizontal>
+                            </sizing>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                        </flow-layout>
+                    </children>
+
+                    <horizontal-alignment>left</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+
+                    <sizing>
+                        <horizontal method="fill">40</horizontal>
+                    </sizing>
+
+                    <padding>
+                        <all>10</all>
+                    </padding>
+
+                    <surface>
+                        <panel/>
+                    </surface>
+                </flow-layout>
+            </children>
+
+            <vertical-alignment>center</vertical-alignment>
+            <horizontal-alignment>center</horizontal-alignment>
+
+            <surface>
+                <vanilla-translucent/>
+            </surface>
+        </flow-layout>
+    </components>
+
+    <templates>
+        <property-text-box>
+            <flow-layout direction="horizontal">
+                <children>
+                    <label>
+                        <text>{{property-name}}</text>
+                        <shadow>true</shadow>
+
+                        <sizing>
+                            <horizontal method="fill">45</horizontal>
+                        </sizing>
+
+                        <margins>
+                            <right>2</right>
+                        </margins>
+                    </label>
+
+                    <text-box id="{{property}}-text-box">
+                        <sizing>
+                            <horizontal method="fill">45</horizontal>
+                        </sizing>
+
+                        <margins>
+                            <left>2</left>
+                        </margins>
+                        <text>1</text>
+                    </text-box>
+                </children>
+
+                <vertical-alignment>center</vertical-alignment>
+
+                <margins>
+                    <vertical>2</vertical>
+                </margins>
+            </flow-layout>
+        </property-text-box>
+    </templates>
+</owo-ui>

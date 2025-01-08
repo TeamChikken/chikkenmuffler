@@ -1,11 +1,10 @@
 package com.tropicbliss.soundmuffler.events.handler;
 
 import com.tropicbliss.soundmuffler.SoundMufflerClientMod;
-import com.tropicbliss.soundmuffler.SoundMufflerMod;
 import com.tropicbliss.soundmuffler.block.SoundMufflerBlockEntity;
-import com.tropicbliss.soundmuffler.config.SoundMufflerConfig;
 import com.tropicbliss.soundmuffler.events.SoundPlayingEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.state.property.Properties;
 
 public class SoundEventHandler {
 
@@ -28,7 +27,7 @@ public class SoundEventHandler {
       SoundMufflerBlockEntity muffler = SoundMufflerClientMod.mufflers.get(i);
 
       // Check if the muffler is valid
-      if (muffler == null || muffler.isRemoved() || !muffler.hasWorld()) {
+      if (muffler == null || muffler.isRemoved() || !muffler.hasWorld() || muffler.getWorld() == null || muffler.getWorld().getBlockState(muffler.getPos()).get(Properties.POWERED)) {
         SoundMufflerClientMod.mufflers.remove(muffler);
         continue;
       }
@@ -46,8 +45,7 @@ public class SoundEventHandler {
       return;
     }
 
-    SoundMufflerConfig config = SoundMufflerMod.CONFIG;
-    float scale = (float)((Math.sqrt(closestDistance) - config.mufflerRange()) / config.falloffRange());
+    float scale = (float)((Math.sqrt(closestDistance) - closestMuffler.getMufflerRange()) / closestMuffler.getFalloffRange());
 
     // Audio source too far, no muffling applicable
     if (scale > 1) {
@@ -56,11 +54,11 @@ public class SoundEventHandler {
 
     // Audio source within base range? Then set volume to min
     if (scale < 0) {
-      soundInfo.setVolume(config.minVolume());
+      soundInfo.setVolume(closestMuffler.getMinVolume());
       return;
     }
 
     // Set volume to result of falloff method
-    soundInfo.setVolume(config.falloffMethod().getFalloffMethod().calculate(scale, config.minVolume(), soundInfo.getVolume()));
+    soundInfo.setVolume(closestMuffler.getFalloffMethod().getFalloffMethod().calculate(scale, closestMuffler.getMinVolume(), soundInfo.getVolume()));
   }
 }

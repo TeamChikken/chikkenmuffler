@@ -1,32 +1,35 @@
 package com.tropicbliss.soundmuffler.config;
 
-import com.tropicbliss.soundmuffler.falloff.*;
-import io.wispforest.owo.config.annotation.Config;
-import io.wispforest.owo.config.annotation.Modmenu;
+import io.wispforest.owo.config.Option;
+import io.wispforest.owo.config.annotation.*;
 
 @Modmenu(modId = "soundmuffler")
 @Config(name = "soundmuffler_config", wrapperName = "SoundMufflerConfig")
+@Sync(Option.SyncMode.OVERRIDE_CLIENT) // Send config from server to client
 public class SoundMufflerConfigModel {
-    public float minVolume = 0;
-    public double mufflerRange = 7;
-    public double falloffRange = 10;
+    @PredicateConstraint("positive")
+    public float minMinVolume = 0f;
 
-    public FalloffMethod falloffMethod = FalloffMethod.LINEAR;
+    @PredicateConstraint("positive")
+    public float maxMinVolume = 1f;
 
-    public enum FalloffMethod {
-        LINEAR(new LinearFalloffMethod()),
-        EXPONENTIAL(new ExponentialFalloffMethod()),
-        LOGARITHMIC(new LogarithmicFalloffMethod()),
-        INVERSE_SQUARED(new InverseSquaredFalloffMethod());
+    @PredicateConstraint("positive")
+    public double minMufflerRange = 0d;
 
-        private final IFalloffMethod falloffMethod;
+    @PredicateConstraint("positive")
+    public double maxMufflerRange = 7d;
 
-        FalloffMethod(IFalloffMethod falloffMethod) {
-            this.falloffMethod = falloffMethod;
-        }
+    @PredicateConstraint("positive")
+    public double minFalloffRange = 0d;
 
-        public IFalloffMethod getFalloffMethod() {
-            return falloffMethod;
-        }
+    @PredicateConstraint("positive")
+    public double maxFalloffRange = 10d;
+
+    public static boolean positive(double value) {
+        return value >= 0d;
+    }
+
+    public static boolean positive(float value) {
+        return value >= 0f;
     }
 }

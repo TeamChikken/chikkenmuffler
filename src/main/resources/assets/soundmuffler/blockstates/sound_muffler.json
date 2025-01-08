@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "powered=false": {
       "model": "soundmuffler:block/sound_muffler"
+    },
+    "powered=true": {
+      "model": "soundmuffler:block/sound_muffler_disabled"
     }
   }
 }
