@@ -20,6 +20,12 @@
                             <property-name>Falloff Range</property-name>
                         </template>
 
+                        <template name="property-button">
+                            <property>falloff-method</property>
+                            <property-name>Falloff Method</property-name>
+                            <property-text>Linear</property-text>
+                        </template>
+
                         <flow-layout direction="horizontal">
                             <children>
                                 <button id="button-cancel">
@@ -69,7 +75,7 @@
                     </padding>
 
                     <surface>
-                        <panel/>
+                        <panel dark="true" />
                     </surface>
                 </flow-layout>
             </children>
@@ -112,12 +118,58 @@
                     </text-box>
                 </children>
 
+                <horizontal-alignment>center</horizontal-alignment>
                 <vertical-alignment>center</vertical-alignment>
 
                 <margins>
                     <vertical>2</vertical>
                 </margins>
+
+                <sizing>
+                    <horizontal method="fill">100</horizontal>
+                </sizing>
             </flow-layout>
         </property-text-box>
+
+        <property-button>
+            <flow-layout direction="horizontal">
+                <children>
+                    <label>
+                        <text>{{property-name}}</text>
+                        <shadow>true</shadow>
+
+                        <sizing>
+                            <horizontal method="fill">45</horizontal>
+                        </sizing>
+
+                        <margins>
+                            <right>2</right>
+                        </margins>
+                    </label>
+
+                    <button id="{{property}}-button">
+                        <text>{{property-text}}</text>
+                        <sizing>
+                            <horizontal method="fill">45</horizontal>
+                        </sizing>
+
+                        <margins>
+                            <left>2</left>
+                        </margins>
+                    </button>
+                </children>
+
+                <horizontal-alignment>center</horizontal-alignment>
+                <vertical-alignment>center</vertical-alignment>
+
+                <margins>
+                    <vertical>2</vertical>
+                </margins>
+
+                <sizing>
+                    <horizontal method="fill">100</horizontal>
+                </sizing>
+            </flow-layout>
+        </property-button>
     </templates>
 </owo-ui>
