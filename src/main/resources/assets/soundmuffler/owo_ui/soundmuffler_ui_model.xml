@@ -5,6 +5,20 @@
             <children>
                 <flow-layout direction="vertical">
                     <children>
+                        <label>
+                            <text>Muffler Config</text>
+
+                            <horizontal-text-alignment>center</horizontal-text-alignment>
+
+                            <sizing>
+                                <horizontal method="fill">100</horizontal>
+                            </sizing>
+
+                            <margins>
+                                <bottom>4</bottom>
+                            </margins>
+                        </label>
+
                         <template name="property-text-box">
                             <property>min-volume</property>
                             <property-name>Min Volume</property-name>
