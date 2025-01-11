@@ -67,7 +67,7 @@
                     <vertical-alignment>center</vertical-alignment>
 
                     <sizing>
-                        <horizontal method="fill">40</horizontal>
+                        <horizontal method="fill">50</horizontal>
                     </sizing>
 
                     <padding>

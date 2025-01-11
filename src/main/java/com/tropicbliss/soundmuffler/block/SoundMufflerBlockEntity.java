@@ -8,9 +8,13 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class SoundMufflerBlockEntity extends BlockEntity {
     private float minVolume = 0;
@@ -29,10 +33,14 @@ public class SoundMufflerBlockEntity extends BlockEntity {
         nbt.putDouble("mufflerRange", mufflerRange);
         nbt.putDouble("falloffRange", falloffRange);
         nbt.putString("falloffMethod", falloffMethod.toString());
+
+        super.writeNbt(nbt);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+
         minVolume = nbt.getFloat("minVolume");
         mufflerRange = nbt.getDouble("mufflerRange");
         falloffRange = nbt.getDouble("falloffRange");
@@ -43,6 +51,17 @@ public class SoundMufflerBlockEntity extends BlockEntity {
         } catch (Exception e) {
             falloffMethod = FalloffMethod.LINEAR;
         }
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, SoundMufflerBlockEntity entity) {
@@ -65,22 +84,32 @@ public class SoundMufflerBlockEntity extends BlockEntity {
 
     public void setMinVolume(float volume) {
         minVolume = Math.max(Math.min(volume, SoundMufflerMod.CONFIG.maxMinVolume()), SoundMufflerMod.CONFIG.minMinVolume());
-        markDirty();
+        markToUpdate();
     }
 
     public void setMufflerRange(double range) {
         mufflerRange = Math.max(Math.min(range, SoundMufflerMod.CONFIG.maxMufflerRange()), SoundMufflerMod.CONFIG.minMufflerRange());
-        markDirty();
+        markToUpdate();
     }
 
     public void setFalloffRange(double range) {
         falloffRange = Math.max(Math.min(range, SoundMufflerMod.CONFIG.maxFalloffRange()), SoundMufflerMod.CONFIG.minFalloffRange());
-        markDirty();
+        markToUpdate();
     }
 
     public void setFalloffMethod(FalloffMethod method) {
         falloffMethod = method;
-        markDirty();
+        markToUpdate();
+    }
+
+    // Present to prevent sending too many packets
+    public void setAll(float volume, double range, double falloffRange, FalloffMethod method) {
+        this.minVolume = volume;
+        this.mufflerRange = range;
+        this.falloffRange = falloffRange;
+        this.falloffMethod = method;
+
+        markToUpdate();
     }
 
     public float getMinVolume() {
@@ -97,5 +126,13 @@ public class SoundMufflerBlockEntity extends BlockEntity {
 
     public FalloffMethod getFalloffMethod() {
         return falloffMethod;
+    }
+
+    public void markToUpdate() {
+        markDirty();
+
+        if (this.getWorld() != null) {
+            this.getWorld().updateListeners(pos, getCachedState(), getCachedState(), 0);
+        }
     }
 }

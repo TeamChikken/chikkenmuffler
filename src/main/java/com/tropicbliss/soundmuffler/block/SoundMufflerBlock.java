@@ -57,16 +57,20 @@ public class SoundMufflerBlock extends BlockWithEntity {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (!player.canModifyAt(world, pos)) {
+            return ActionResult.FAIL;
+        }
+
         if (!world.isClient) {
             return ActionResult.SUCCESS;
         }
 
-        SoundMufflerBlockEntity soundMufflerBlockEntity = (SoundMufflerBlockEntity)world.getBlockEntity(pos);
-        if (soundMufflerBlockEntity == null) {
+        BlockEntity be = world.getBlockEntity(pos);
+        if (!(be instanceof SoundMufflerBlockEntity muffler)) {
             return ActionResult.PASS;
         }
 
-        MinecraftClient.getInstance().setScreen(new SoundMufflerBlockConfigScreen(soundMufflerBlockEntity));
+        MinecraftClient.getInstance().setScreen(new SoundMufflerBlockConfigScreen(muffler));
         return ActionResult.SUCCESS;
     }
 }
